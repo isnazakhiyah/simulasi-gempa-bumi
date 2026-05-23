@@ -1,0 +1,16 @@
+{
+  "name": "@simulasi-gempa/ui",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "main": "src/index.ts",
+  "module": "src/index.ts",
+  "types": "src/index.ts",
+  "peerDependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "dependencies": {
+    "@simulasi-gempa/shared-types": "*"
+  }
+}

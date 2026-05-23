@@ -1,0 +1,28 @@
+{
+  "name": "simulasi-gempa-monorepo",
+  "private": true,
+  "version": "1.0.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run build:shared-types && npm run build:sim-core && concurrently -n web,api -c magenta,cyan \"npm run dev:web\" \"npm run dev:api\"",
+    "dev:web": "npm run dev --workspace @simulasi-gempa/web",
+    "dev:api": "npm run dev --workspace @simulasi-gempa/api",
+    "build": "npm run build:shared-types && npm run build:sim-core && npm run build:web && npm run build:api",
+    "build:shared-types": "npm run build --workspace @simulasi-gempa/shared-types",
+    "build:sim-core": "npm run build --workspace @simulasi-gempa/sim-core",
+    "build:web": "npm run build --workspace @simulasi-gempa/web",
+    "build:api": "npm run build --workspace @simulasi-gempa/api",
+    "preview": "npm run preview --workspace @simulasi-gempa/web",
+    "db:migrate": "npm run db:migrate --workspace @simulasi-gempa/api",
+    "db:seed:katalog": "npm run db:seed:katalog --workspace @simulasi-gempa/api"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
