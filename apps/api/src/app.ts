@@ -15,11 +15,14 @@ const openai = new OpenAI({
 export function createApp() {
   const app = express();
 
-  app.use(
-    cors({
-      origin: config.CORS_ORIGIN,
-    }),
-  );
+app.use(
+  cors({
+    origin: [
+      'http://localhost:5173',
+      'https://simulasi-gempa-bumi-web.vercel.app',
+    ],
+  }),
+);
   app.use(express.json());
 
   app.get('/', (_request, response) => {
