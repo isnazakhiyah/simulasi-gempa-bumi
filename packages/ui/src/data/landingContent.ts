@@ -41,20 +41,7 @@ export const actionCards: ActionCardItem[] = [
     panelIcon: 'public',
     panelIconClass: 'text-primary',
     iconWrapperClass: 'bg-blue-50 text-primary',
-  },
-  {
-    title: 'Mode Diskusi Kelas',
-    description:
-      'Skenario kasus khusus untuk bahan diskusi kelas dan analisis mitigasi bencana bersama siswa.',
-    cta: 'Masuk Kelas',
-    href: '/simulasi',
-    accentClass: 'text-purple-600',
-    accentHoverClass: 'group-hover:text-purple-600',
-    icon: 'co_present',
-    panelIcon: 'groups',
-    panelIconClass: 'text-purple-500',
-    iconWrapperClass: 'bg-purple-50 text-purple-600',
-  },
+  }
 ];
 
 export const features: FeatureItem[] = [
