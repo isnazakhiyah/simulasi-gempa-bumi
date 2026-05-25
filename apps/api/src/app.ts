@@ -16,11 +16,27 @@ export function createApp() {
   const app = express();
 
   // =========================================
-  // CORS
+  // CORS (FIXED - PRODUCTION SAFE)
   // =========================================
+  const allowedOrigins = [
+    'http://localhost:5173',
+    'https://simulasi-gempa-bumi-web.vercel.app',
+  ];
+
   app.use(
     cors({
-      origin: '*',
+      origin: function (origin, callback) {
+        // allow tools like Postman / server-to-server (no origin)
+        if (!origin) return callback(null, true);
+
+        if (allowedOrigins.includes(origin)) {
+          return callback(null, true);
+        }
+
+        return callback(new Error(`CORS blocked for origin: ${origin}`));
+      },
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+      credentials: true,
     }),
   );
 
