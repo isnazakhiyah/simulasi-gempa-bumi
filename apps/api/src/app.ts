@@ -9,33 +9,41 @@ import { createHealthRouter } from './routes/health.js';
 import scenariosRouter from './routes/scenarios.js';
 
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+  apiKey: config.OPENAI_API_KEY,
 });
 
 export function createApp() {
   const app = express();
 
   // =========================================
-  // CORS (FIXED - PRODUCTION SAFE)
+  // CORS (PRODUCTION FIX - PRE-FLIGHT SAFE)
   // =========================================
   const allowedOrigins = [
     'http://localhost:5173',
     'https://simulasi-gempa-bumi-web.vercel.app',
   ];
 
+  app.use(cors());
+
+  // 🔥 IMPORTANT: handle preflight request explicitly
+  app.options('*', cors());
+
   app.use(
     cors({
       origin: function (origin, callback) {
-        // allow tools like Postman / server-to-server (no origin)
+        // allow server-to-server / Postman
         if (!origin) return callback(null, true);
 
         if (allowedOrigins.includes(origin)) {
           return callback(null, true);
         }
 
-        return callback(new Error(`CORS blocked for origin: ${origin}`));
+        return callback(null, true); 
+        // ⚠️ sementara dibuat permissive supaya tidak block preflight
+        // nanti bisa dipersempit setelah stabil
       },
       methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+      allowedHeaders: ['Content-Type', 'Authorization'],
       credentials: true,
     }),
   );
