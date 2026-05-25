@@ -1,3 +1,5 @@
+CREATE EXTENSION IF NOT EXISTS postgis;
+
 CREATE TABLE IF NOT EXISTS earthquake_events (
   id uuid PRIMARY KEY,
   source text NOT NULL,
