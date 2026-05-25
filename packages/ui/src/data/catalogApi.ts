@@ -7,7 +7,7 @@ import type {
 
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL ??
-  'https://simulasi-gempaapi-production.up.railway.app';
+  'http://localhost:3001';
 
 function buildQuery(filters: CatalogEventFilters) {
   const params = new URLSearchParams();
@@ -34,7 +34,7 @@ async function parseApiResponse<T>(response: Response): Promise<T> {
 
     throw new Error(
       errorPayload?.error.message ??
-        'Permintaan API gagal diproses.',
+      'Permintaan API gagal diproses.',
     );
   }
 
