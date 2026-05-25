@@ -29,7 +29,7 @@ export function HeroSection() {
           AI-enhanced STEM disaster simulation platform untuk mengembangkan kompetensi calon guru IPA melalui integrasi sains, teknologi, rekayasa, dan literasi risiko kebencanaan
         </p>
 
-        <div className="grid w-full max-w-[760px] grid-cols-1 gap-6 md:grid-cols-2">
+        <div className="flex w-full max-w-[760px] justify-center">
           {actionCards.map((item) => (
             <ActionCard key={item.title} item={item} />
           ))}
