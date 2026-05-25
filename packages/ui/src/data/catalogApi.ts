@@ -7,7 +7,7 @@ import type {
 
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL ??
-  'http://localhost:3001';
+  'https://simulasi-gempaapi-production.up.railway.app';
 
 function buildQuery(filters: CatalogEventFilters) {
   const params = new URLSearchParams();
@@ -23,16 +23,18 @@ function buildQuery(filters: CatalogEventFilters) {
   if (filters.limit !== undefined) params.set('limit', String(filters.limit));
 
   const query = params.toString();
+
   return query ? `?${query}` : '';
 }
 
 async function parseApiResponse<T>(response: Response): Promise<T> {
   if (!response.ok) {
-    const errorPayload = (await response.json().catch(() => null)) as ApiErrorResponse | null;
+    const errorPayload =
+      (await response.json().catch(() => null)) as ApiErrorResponse | null;
 
     throw new Error(
       errorPayload?.error.message ??
-      'Permintaan API gagal diproses.',
+        'Permintaan API gagal diproses.',
     );
   }
 

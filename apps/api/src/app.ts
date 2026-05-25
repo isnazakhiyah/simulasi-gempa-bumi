@@ -15,16 +15,20 @@ const openai = new OpenAI({
 export function createApp() {
   const app = express();
 
-app.use(
-  cors({
-    origin: [
-      'http://localhost:5173',
-      'https://simulasi-gempa-bumi-web.vercel.app',
-    ],
-  }),
-);
+  // =========================================
+  // CORS
+  // =========================================
+  app.use(
+    cors({
+      origin: '*',
+    }),
+  );
+
   app.use(express.json());
 
+  // =========================================
+  // ROOT
+  // =========================================
   app.get('/', (_request, response) => {
     response.json({
       ok: true,
@@ -37,10 +41,17 @@ app.use(
     });
   });
 
+  // =========================================
+  // ROUTES
+  // =========================================
   app.use('/api/v1/health', createHealthRouter());
   app.use('/api/v1/catalog', createCatalogRouter());
   app.use('/api/v1/scenarios', scenariosRouter);
-    app.post('/api/v1/chat', async (request, response) => {
+
+  // =========================================
+  // AI CHAT
+  // =========================================
+  app.post('/api/v1/chat', async (request, response) => {
     try {
       const { message } = request.body;
 
@@ -50,10 +61,16 @@ app.use(
           {
             role: 'system',
             content: `
-            Anda adalah AI pedagogis simulasi bencana gempa bumi.
-            Jelaskan dengan bahasa sederhana dan edukatif.
-            Bantu mahasiswa memahami mitigasi, kesiapsiagaan,
-            dan prosedur evakuasi bencana.
+Anda adalah AI pedagogis simulasi bencana gempa bumi.
+
+Jelaskan dengan bahasa sederhana dan edukatif.
+
+Bantu mahasiswa memahami:
+- mitigasi gempa bumi
+- kesiapsiagaan bencana
+- prosedur evakuasi
+- dampak gempa bumi
+- keselamatan masyarakat
             `,
           },
           {
@@ -77,6 +94,9 @@ app.use(
     }
   });
 
+  // =========================================
+  // 404 HANDLER
+  // =========================================
   app.use((_request, response) => {
     sendError(response, 404, 'NOT_FOUND', 'Endpoint tidak ditemukan.');
   });
