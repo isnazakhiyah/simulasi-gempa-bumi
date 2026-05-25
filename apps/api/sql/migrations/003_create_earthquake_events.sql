@@ -1,5 +1,3 @@
-CREATE EXTENSION IF NOT EXISTS postgis;
-
 CREATE TABLE IF NOT EXISTS earthquake_events (
   id uuid PRIMARY KEY,
   source text NOT NULL,
@@ -10,7 +8,6 @@ CREATE TABLE IF NOT EXISTS earthquake_events (
   event_date date NULL,
   latitude double precision NOT NULL,
   longitude double precision NOT NULL,
-  geom geography(Point, 4326) NULL,
   depth_km double precision NOT NULL,
   magnitude double precision NOT NULL,
   region_label text NULL,
@@ -29,4 +26,3 @@ CREATE TABLE IF NOT EXISTS earthquake_events (
 CREATE INDEX IF NOT EXISTS earthquake_events_event_date_idx ON earthquake_events (event_date DESC);
 CREATE INDEX IF NOT EXISTS earthquake_events_magnitude_idx ON earthquake_events (magnitude DESC);
 CREATE INDEX IF NOT EXISTS earthquake_events_depth_idx ON earthquake_events (depth_km ASC);
-CREATE INDEX IF NOT EXISTS earthquake_events_geom_gist_idx ON earthquake_events USING GIST (geom);
